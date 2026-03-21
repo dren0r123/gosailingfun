@@ -1,5 +1,6 @@
 import { NextFunction, Request as ExpressRequest, Response as ExpressResponse } from 'express';
 
+import { ERROR_MESSAGES } from '../const';
 import { GenerateCertificateRequestPayload } from '../interfaces';
 import { generatePdfCertificateStream, validateCertificateInYclients } from '../services';
 
@@ -10,24 +11,24 @@ export async function handleCertificateGeneration(
 ): Promise<void> {
   try {
     const requestPayload: GenerateCertificateRequestPayload = expressRequest.body;
-    const { clientFullName, certificateIdentifier, templateDesignId } = requestPayload;
+    const { clientFullName, certificateIdentifier, templateDesignId, phone } = requestPayload;
 
-    if (!clientFullName || !certificateIdentifier || !templateDesignId) {
+    if (!clientFullName || !certificateIdentifier || !templateDesignId || !phone) {
       expressResponse.status(400);
-      throw new Error('Missing required fields in request payload');
+      throw new Error(ERROR_MESSAGES.MISSING_FIELDS);
     }
 
     try {
-      const isCertificateValid = await validateCertificateInYclients(certificateIdentifier);
+      const isCertificateValid = await validateCertificateInYclients(certificateIdentifier, phone);
 
       if (!isCertificateValid) {
         expressResponse.status(404);
-        throw new Error('Certificate not found or invalid in YCLIENTS');
+        throw new Error(ERROR_MESSAGES.INVALID_CERTIFICATE);
       }
     } catch (validationError: unknown) {
-      if (validationError instanceof Error && validationError.message === 'YCLIENTS_RATE_LIMIT_EXCEEDED') {
+      if (validationError instanceof Error && validationError.message === ERROR_MESSAGES.YCLIENTS_RATE_LIMIT_EXCEEDED) {
         expressResponse.status(429);
-        throw new Error('Too many requests to YCLIENTS validation service', { cause: validationError });
+        throw new Error(ERROR_MESSAGES.YCLIENTS_VALIDATION_TOO_MANY_REQUESTS, { cause: validationError });
       }
       if (expressResponse.statusCode === 200) expressResponse.status(500);
       throw validationError;

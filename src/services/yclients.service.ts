@@ -1,19 +1,24 @@
 import axios from 'axios';
 
+import { ERROR_MESSAGES } from '../const';
 import { YclientsResponsePayload } from '../interfaces';
 
-export async function validateCertificateInYclients(certificateIdentifier: string): Promise<boolean> {
+export async function validateCertificateInYclients(certificateIdentifier: string, phone: string): Promise<boolean> {
   try {
-    const yclientsResponse = await axios.get<YclientsResponsePayload>(
-      'https://api.yclients.com/api/v1/loyalty/certificates?company_id=1743224&phone=79235137888',
-      {
-        headers: {
-          Accept: 'application/vnd.yclients.v2+json',
-          Authorization: 'Bearer 569na6pz9m6jz8x6aauw, User c47eb83df24d4dadadf92cd12aa367c2',
-          'Content-Type': 'application/json',
-        },
+    const yclientsApiUrl = process.env.YCLIENTS_API_URL || 'https://api.yclients.com/api/v1/loyalty/certificates';
+    const companyId = process.env.YCLIENTS_COMPANY_ID || '';
+    const bearerToken = process.env.YCLIENTS_BEARER_TOKEN || '';
+    const userToken = process.env.YCLIENTS_USER_TOKEN || '';
+
+    const requestUrl = `${yclientsApiUrl}?company_id=${companyId}&phone=${phone}`;
+
+    const yclientsResponse = await axios.get<YclientsResponsePayload>(requestUrl, {
+      headers: {
+        Accept: 'application/vnd.yclients.v2+json',
+        Authorization: `Bearer ${bearerToken}, User ${userToken}`,
+        'Content-Type': 'application/json',
       },
-    );
+    });
 
     const { data: responsePayload } = yclientsResponse;
 
@@ -25,7 +30,7 @@ export async function validateCertificateInYclients(certificateIdentifier: strin
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 429) {
-        throw new Error('YCLIENTS_RATE_LIMIT_EXCEEDED', { cause: error });
+        throw new Error(ERROR_MESSAGES.YCLIENTS_RATE_LIMIT_EXCEEDED, { cause: error });
       }
       return false;
     }
