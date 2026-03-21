@@ -27,7 +27,7 @@ export async function validateCertificateInYclients(code: string, phone: string)
       return false;
     }
 
-    const certificate = responsePayload.data.find(c => c.number === code);
+    const certificate = responsePayload.data.find(({ number }) => number === code);
 
     if (!certificate) {
       return false;
