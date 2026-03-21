@@ -4,7 +4,7 @@ import { ERROR_MESSAGES } from '../const';
 import { AppError } from '../errors';
 import { YclientsCertificateObject, YclientsResponsePayload } from '../interfaces';
 
-export async function validateCertificateInYclients(certificateIdentifier: string, phone: string): Promise<boolean> {
+export async function validateCertificateInYclients(code: string, phone: string): Promise<boolean> {
   try {
     const yclientsApiUrl = process.env.YCLIENTS_API_URL || 'https://api.yclients.com/api/v1/loyalty/certificates';
     const companyId = process.env.YCLIENTS_COMPANY_ID || '';
@@ -27,7 +27,7 @@ export async function validateCertificateInYclients(certificateIdentifier: strin
       return false;
     }
 
-    const certificate = responsePayload.data.find(c => c.number === certificateIdentifier);
+    const certificate = responsePayload.data.find(c => c.number === code);
 
     if (!certificate) {
       return false;

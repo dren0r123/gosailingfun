@@ -7,14 +7,14 @@ import { ERROR_MESSAGES } from '../const';
 import { AppError } from '../errors';
 
 export async function generatePdfCertificateStream(
-  clientFullName: string,
-  certificateIdentifier: string,
-  templateDesignId: number | string,
+  clientName: string,
+  code: string,
+  templateId: number | string,
 ): Promise<Buffer> {
   const assetsDirectoryPath = path.join(process.cwd(), 'src', 'assets');
   const fontsDirectoryPath = path.join(process.cwd(), 'src', 'fonts');
 
-  const backgroundPdfPath = path.join(assetsDirectoryPath, `certificate_front_${templateDesignId}.pdf`);
+  const backgroundPdfPath = path.join(assetsDirectoryPath, `certificate_front_${templateId}.pdf`);
   const fontFilePath = path.join(fontsDirectoryPath, 'Roboto-Regular.ttf');
 
   let pdfDoc: PDFDocument;
@@ -44,7 +44,7 @@ export async function generatePdfCertificateStream(
   const fontSizeId = 8;
 
   const maxNameWidth = width - 40; // 20 margin on each side
-  const words = clientFullName.split(' ');
+  const words = clientName.split(' ');
   const nameLines: string[] = [];
   let currentLine = words[0] || '';
 
@@ -79,7 +79,7 @@ export async function generatePdfCertificateStream(
     currentY -= lineHeightName;
   }
 
-  const idText = `Сертификат №: ${certificateIdentifier}`;
+  const idText = `Сертификат №: ${code}`;
   const idWidth = customFont.widthOfTextAtSize(idText, fontSizeId);
   const idX = (width - idWidth) / 2;
   const idY = currentY + lineHeightName - 20; // 20 units below the last line of the name

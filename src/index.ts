@@ -36,7 +36,7 @@ expressApplication.use(
 expressApplication.use(express.json());
 
 const apiRouter = express.Router();
-apiRouter.use('/certificates', certificateRouter);
+apiRouter.use('/certificate', certificateRouter);
 
 // Healthcheck
 expressApplication.get('/', (req: Request, res: Response) => {

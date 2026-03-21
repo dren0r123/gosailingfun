@@ -1,6 +1,6 @@
 export interface GenerateCertificateRequestPayload {
-  clientFullName: string;
-  certificateIdentifier: string;
-  templateDesignId: number | string;
+  clientName: string;
+  code: string;
   phone: string;
+  templateId?: number | string;
 }

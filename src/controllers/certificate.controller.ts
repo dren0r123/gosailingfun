@@ -3,7 +3,7 @@ import { NextFunction, Request as ExpressRequest, Response as ExpressResponse } 
 import { ERROR_MESSAGES } from '../const';
 import { AppError } from '../errors';
 import { GenerateCertificateRequestPayload } from '../interfaces';
-import { generatePdfCertificateStream, validateCertificateInYclients } from '../services';
+import { validateCertificateInYclients } from '../services';
 
 export async function handleCertificateGeneration(
   expressRequest: ExpressRequest,
@@ -12,28 +12,34 @@ export async function handleCertificateGeneration(
 ): Promise<void> {
   try {
     const requestPayload: GenerateCertificateRequestPayload = expressRequest.body;
-    const { clientFullName, certificateIdentifier, templateDesignId, phone } = requestPayload;
+    const { clientName, code, templateId = 1, phone } = requestPayload || {};
 
-    if (!clientFullName || !certificateIdentifier || !templateDesignId || !phone) {
-      throw new AppError(400, ERROR_MESSAGES.MISSING_FIELDS);
+    const missingFields: string[] = [];
+    if (!clientName) missingFields.push('clientName');
+    if (!code) missingFields.push('code');
+    if (!phone) missingFields.push('phone');
+
+    if (missingFields.length > 0) {
+      throw new AppError(400, `${ERROR_MESSAGES.MISSING_FIELDS}: ${missingFields.join(', ')}`);
     }
 
-    const isCertificateValid = await validateCertificateInYclients(certificateIdentifier, phone);
+    const isCertificateValid = await validateCertificateInYclients(code, phone);
+    expressResponse.send({ isCertificateValid });
 
-    if (!isCertificateValid) {
-      throw new AppError(404, ERROR_MESSAGES.INVALID_CERTIFICATE);
-    }
+    // if (!isCertificateValid) {
+    //   throw new AppError(404, ERROR_MESSAGES.INVALID_CERTIFICATE);
+    // }
 
-    const pdfDocumentBuffer = await generatePdfCertificateStream(
-      clientFullName,
-      certificateIdentifier,
-      templateDesignId,
-    );
+    // const pdfDocumentBuffer = await generatePdfCertificateStream(
+    //   clientName,
+    //   code,
+    //   templateId,
+    // );
 
-    expressResponse.setHeader('Content-Type', 'application/pdf');
-    expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');
+    // expressResponse.setHeader('Content-Type', 'application/pdf');
+    // expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');
 
-    expressResponse.send(pdfDocumentBuffer);
+    // expressResponse.send(pdfDocumentBuffer);
   } catch (error: unknown) {
     next(error);
   }
