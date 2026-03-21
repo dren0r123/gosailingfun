@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { ERROR_MESSAGES } from '../const';
 import { AppError } from '../errors';
-import { YclientsResponsePayload } from '../interfaces';
+import { YclientsCertificateObject, YclientsResponsePayload } from '../interfaces';
 
 export async function validateCertificateInYclients(certificateIdentifier: string, phone: string): Promise<boolean> {
   try {
@@ -27,7 +27,17 @@ export async function validateCertificateInYclients(certificateIdentifier: strin
       return false;
     }
 
-    return responsePayload.data.some(certificateObject => certificateObject.number === certificateIdentifier);
+    const certificate = responsePayload.data.find(c => c.number === certificateIdentifier);
+
+    if (!certificate) {
+      return false;
+    }
+
+    const isActive = certificate.status?.slug === 'active';
+    const hasBalance = certificate.balance > 0;
+    const isNotExpired = checkIsNotExpired(certificate);
+
+    return isActive && hasBalance && isNotExpired;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 429) {
@@ -38,3 +48,48 @@ export async function validateCertificateInYclients(certificateIdentifier: strin
     throw error;
   }
 }
+
+const checkIsNotExpired = (certificate: YclientsCertificateObject): boolean => {
+  const expirationTypeId = certificate.type?.expiration_type_id;
+
+  // 0 - без ограничения срока действия
+  if (expirationTypeId === 0) {
+    return true;
+  }
+
+  // Изначально проверяем вычисленную дату сгорания у самого сертификата
+  if (certificate.expiration_date) {
+    return new Date(certificate.expiration_date).getTime() > Date.now();
+  }
+
+  // 1 - фиксированная дата (если не указана у самого сертификата, берем из типа)
+  if (expirationTypeId === 1 && certificate.type?.expiration_date) {
+    return new Date(certificate.type.expiration_date).getTime() > Date.now();
+  }
+
+  // 2 - фиксированный срок (вычисляем дату сгорания относительно даты создания, если ее нет)
+  if (expirationTypeId === 2 && certificate.created_date && certificate.type?.expiration_timeout) {
+    const expirationDate = new Date(certificate.created_date);
+    const timeout = certificate.type.expiration_timeout;
+    const unitId = certificate.type.expiration_timeout_unit_id;
+
+    switch (unitId) {
+      case 1: // День
+        expirationDate.setDate(expirationDate.getDate() + timeout);
+        break;
+      case 2: // Неделя
+        expirationDate.setDate(expirationDate.getDate() + timeout * 7);
+        break;
+      case 3: // Месяц
+        expirationDate.setMonth(expirationDate.getMonth() + timeout);
+        break;
+      case 4: // Год
+        expirationDate.setFullYear(expirationDate.getFullYear() + timeout);
+        break;
+    }
+
+    return expirationDate.getTime() > Date.now();
+  }
+
+  return false;
+};
