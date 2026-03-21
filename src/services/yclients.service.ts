@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { ERROR_MESSAGES } from '../const';
+import { AppError } from '../errors';
 import { YclientsResponsePayload } from '../interfaces';
 
 export async function validateCertificateInYclients(certificateIdentifier: string, phone: string): Promise<boolean> {
@@ -30,7 +31,7 @@ export async function validateCertificateInYclients(certificateIdentifier: strin
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 429) {
-        throw new Error(ERROR_MESSAGES.YCLIENTS_RATE_LIMIT_EXCEEDED, { cause: error });
+        throw new AppError(429, ERROR_MESSAGES.YCLIENTS_VALIDATION_TOO_MANY_REQUESTS);
       }
       return false;
     }

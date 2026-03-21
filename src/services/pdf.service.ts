@@ -4,6 +4,7 @@ import path from 'path';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
 import { ERROR_MESSAGES } from '../const';
+import { AppError } from '../errors';
 
 export async function generatePdfCertificateStream(
   clientFullName: string,
@@ -22,7 +23,7 @@ export async function generatePdfCertificateStream(
     const existingPdfBytes = await fs.promises.readFile(backgroundPdfPath);
     pdfDoc = await PDFDocument.load(existingPdfBytes);
   } else {
-    throw new Error(ERROR_MESSAGES.TEMPLATE_NOT_FOUND);
+    throw new AppError(400, ERROR_MESSAGES.TEMPLATE_NOT_FOUND);
   }
 
   pdfDoc.registerFontkit(fontkit);
