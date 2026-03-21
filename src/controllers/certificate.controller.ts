@@ -34,16 +34,23 @@ export async function handleCertificateGeneration(
       throw validationError;
     }
 
-    const pdfDocumentBuffer = await generatePdfCertificateStream(
-      clientFullName,
-      certificateIdentifier,
-      templateDesignId,
-    );
+    try {
+      const pdfDocumentBuffer = await generatePdfCertificateStream(
+        clientFullName,
+        certificateIdentifier,
+        templateDesignId,
+      );
 
-    expressResponse.setHeader('Content-Type', 'application/pdf');
-    expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');
+      expressResponse.setHeader('Content-Type', 'application/pdf');
+      expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');
 
-    expressResponse.send(pdfDocumentBuffer);
+      expressResponse.send(pdfDocumentBuffer);
+    } catch (pdfError: unknown) {
+      if (pdfError instanceof Error && pdfError.message === ERROR_MESSAGES.TEMPLATE_NOT_FOUND) {
+        expressResponse.status(400);
+      }
+      throw pdfError;
+    }
   } catch (error: unknown) {
     next(error);
   }
