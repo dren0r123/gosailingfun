@@ -3,7 +3,7 @@ import { NextFunction, Request as ExpressRequest, Response as ExpressResponse } 
 import { ERROR_MESSAGES } from '../const';
 import { AppError } from '../errors';
 import { GenerateCertificateRequestPayload } from '../interfaces';
-import { validateCertificateInYclients } from '../services';
+import { generatePdfCertificateStream, validateCertificateInYclients } from '../services';
 
 export async function handleCertificateGeneration(
   expressRequest: ExpressRequest,
@@ -24,22 +24,17 @@ export async function handleCertificateGeneration(
     }
 
     const isCertificateValid = await validateCertificateInYclients(code, phone);
-    expressResponse.send({ isCertificateValid });
 
-    // if (!isCertificateValid) {
-    //   throw new AppError(404, ERROR_MESSAGES.INVALID_CERTIFICATE);
-    // }
+    if (!isCertificateValid) {
+      throw new AppError(404, ERROR_MESSAGES.INVALID_CERTIFICATE);
+    }
 
-    // const pdfDocumentBuffer = await generatePdfCertificateStream(
-    //   clientName,
-    //   code,
-    //   templateId,
-    // );
+    const pdfDocumentBuffer = await generatePdfCertificateStream(clientName, code, templateId);
 
-    // expressResponse.setHeader('Content-Type', 'application/pdf');
-    // expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');
+    expressResponse.setHeader('Content-Type', 'application/pdf');
+    expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');
 
-    // expressResponse.send(pdfDocumentBuffer);
+    expressResponse.send(pdfDocumentBuffer);
   } catch (error: unknown) {
     next(error);
   }

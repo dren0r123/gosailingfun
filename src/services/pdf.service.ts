@@ -14,7 +14,8 @@ export async function generatePdfCertificateStream(
   const assetsDirectoryPath = path.join(process.cwd(), 'src', 'assets');
   const fontsDirectoryPath = path.join(process.cwd(), 'src', 'fonts');
 
-  const backgroundPdfPath = path.join(assetsDirectoryPath, `certificate_front_${templateId}.pdf`);
+  // const backgroundPdfPath = path.join(assetsDirectoryPath, `certificate_front_${templateId}.pdf`);
+  const backgroundPdfPath = path.join(assetsDirectoryPath, `certificate_back.pdf`);
   const fontFilePath = path.join(fontsDirectoryPath, 'Roboto-Regular.ttf');
 
   let pdfDoc: PDFDocument;
