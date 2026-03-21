@@ -9,4 +9,5 @@ export const ERROR_MESSAGES = {
   SOMETHING_WENT_WRONG: 'Что-то пошло не так',
   INTERNAL_SERVER_ERROR: 'Внутренняя ошибка сервера',
   TEMPLATE_NOT_FOUND: 'Указанный шаблон дизайна не найден',
+  FONT_NOT_FOUND: 'Указанный файл шрифта не найден',
 };
