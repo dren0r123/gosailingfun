@@ -83,27 +83,23 @@ export async function generatePdfCertificateStream(
  * Разбивает строку на массив строк (перенос по словам), чтобы текст не выходил за указанную ширину
  */
 function splitTextIntoLines(text: string, font: PDFFont, fontSize: number, maxWidth: number): string[] {
-  const words = text.split(' ');
-  const lines: string[] = [];
-  let currentLine = words[0] || '';
-
-  for (let i = 1; i < words.length; i++) {
-    const word = words[i];
-    const lineWidth = font.widthOfTextAtSize(`${currentLine} ${word}`, fontSize);
-
-    if (lineWidth < maxWidth) {
-      currentLine += ` ${word}`;
-    } else {
-      lines.push(currentLine);
-      currentLine = word;
+  return text.split(' ').reduce((lines: string[], word: string) => {
+    if (lines.length === 0) {
+      return [word];
     }
-  }
 
-  if (currentLine) {
-    lines.push(currentLine);
-  }
+    const lastIndex = lines.length - 1;
+    const currentLine = lines[lastIndex];
+    const testLine = `${currentLine} ${word}`;
 
-  return lines;
+    if (font.widthOfTextAtSize(testLine, fontSize) < maxWidth) {
+      lines[lastIndex] = testLine;
+    } else {
+      lines.push(word);
+    }
+
+    return lines;
+  }, []);
 }
 
 /**
