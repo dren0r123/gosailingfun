@@ -35,10 +35,7 @@ export async function handleCertificateGeneration(
       await sendCertificateEmail(email, pdfDocumentBuffer);
     }
 
-    expressResponse.setHeader('Content-Type', 'application/pdf');
-    expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');
-
-    expressResponse.send(pdfDocumentBuffer);
+    expressResponse.sendStatus(200);
   } catch (error: unknown) {
     next(error);
   }

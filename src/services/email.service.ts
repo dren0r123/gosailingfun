@@ -5,7 +5,7 @@ import { CERTIFICATE_EMAIL_TEMPLATE } from '../const';
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.SMTP_PORT || '465', 10),
-  secure: false,
+  secure: parseInt(process.env.SMTP_PORT || '465', 10) === 465,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
@@ -13,7 +13,6 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendCertificateEmail = async (to: string, pdfBuffer: Buffer): Promise<void> => {
-  console.log('hello', process.env.SMTP_USER, process.env.SMTP_PASS);
   const mailOptions = {
     from: `"GoSailingFun" <${process.env.SMTP_USER}>`,
     to,
