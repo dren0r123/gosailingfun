@@ -3,7 +3,7 @@ import { NextFunction, Request as ExpressRequest, Response as ExpressResponse } 
 import { ERROR_MESSAGES } from '../const';
 import { AppError } from '../errors';
 import { GenerateCertificateRequestPayload } from '../interfaces';
-import { generatePdfCertificateStream, validateCertificateInYclients } from '../services';
+import { generatePdfCertificateStream, sendCertificateEmail, validateCertificateInYclients } from '../services';
 
 export async function handleCertificateGeneration(
   expressRequest: ExpressRequest,
@@ -12,7 +12,7 @@ export async function handleCertificateGeneration(
 ): Promise<void> {
   try {
     const requestPayload: GenerateCertificateRequestPayload = expressRequest.body;
-    const { clientName, code, templateId = 1, phone } = requestPayload || {};
+    const { clientName, code, templateId = 1, phone, email } = requestPayload || {};
 
     const missingFields: string[] = [];
     if (!clientName) missingFields.push('clientName');
@@ -30,6 +30,10 @@ export async function handleCertificateGeneration(
     }
 
     const pdfDocumentBuffer = await generatePdfCertificateStream(clientName, code, templateId);
+
+    if (email) {
+      await sendCertificateEmail(email, pdfDocumentBuffer);
+    }
 
     expressResponse.setHeader('Content-Type', 'application/pdf');
     expressResponse.setHeader('Content-Disposition', 'attachment; filename="certificate.pdf"');

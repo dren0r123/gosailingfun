@@ -1,5 +1,7 @@
-import cors from 'cors';
 import dotenv from 'dotenv';
+dotenv.config();
+
+import cors from 'cors';
 import express, { Express as ExpressApplication, Request, Response } from 'express';
 import fs from 'fs';
 import helmet from 'helmet';
@@ -8,8 +10,6 @@ import path from 'path';
 
 import { ERROR_MESSAGES } from './const';
 import { certificateRouter } from './routes';
-
-dotenv.config();
 
 const expressApplication: ExpressApplication = express();
 const serverPortNumber = process.env.PORT ? Number(process.env.PORT) : 3000;
