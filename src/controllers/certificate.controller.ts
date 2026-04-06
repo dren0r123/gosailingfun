@@ -61,7 +61,7 @@ export async function handleCertificateGeneration(
     const pdfDocumentBuffer = await generatePdfCertificateStream(clientName, code, templateId);
 
     if (email) {
-      await sendCertificateEmail(email, pdfDocumentBuffer);
+      await sendCertificateEmail(email, pdfDocumentBuffer, code);
     }
 
     expressResponse.sendStatus(200);

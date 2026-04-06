@@ -1,4 +1,4 @@
-export const CERTIFICATE_EMAIL_TEMPLATE = `
+export const CERTIFICATE_EMAIL_TEMPLATE = (certificateNumber: string) => `
 <!DOCTYPE html>
 <html lang="ru" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -27,7 +27,7 @@ export const CERTIFICATE_EMAIL_TEMPLATE = `
   </style>
 </head>
 
-<body style="margin: 0; padding: 0; background-color: #f5f3ee; font-family: 'Lobster', 'Inter', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+<body style="margin: 0; padding: 0; background-color: #f5f3ee; font-family: 'Inter', Arial, sans-serif; -webkit-font-smoothing: antialiased;">
   <center class="wrapper" style="width: 100%; table-layout: fixed; background-color: #f9fafb; padding-top: 40px; padding-bottom: 40px;">
     <table align="center" class="main" style="background-color: #ffffff; margin: 0 auto; max-width: 600px; width: 100%; border-spacing: 0; border-collapse: collapse; border-radius: 8px; overflow: hidden; color: #1b1c19;">
       <tbody>
@@ -60,9 +60,12 @@ export const CERTIFICATE_EMAIL_TEMPLATE = `
               <tbody>
                 <tr>
                   <td style="padding: 0;">
+                    <div style="font-size: 28px; line-height: 26px; color: #1B365D; margin: 0px 0px 20px; text-align: center; font-weight: 600;">
+                      Сертификат: <span style="text-decoration: underline;">№ ${certificateNumber}</span>
+                    </div>
                     <p
                       style="font-size: 16px; line-height: 26px; color: #44474E; margin: 0px 0px 32px; text-align: center; font-family: 'Inter', Arial, sans-serif;">
-                      Ваш подарок для прогулки на яхте готов. <br />
+                      Подарок для прогулки на яхте готов. <br />
                       Мы приложили ваш персональный подарочный сертификат в формате PDF к этому письму.<br />
                       С нетерпением ждем встречи с вами на борту!
                     </p>
@@ -82,19 +85,15 @@ export const CERTIFICATE_EMAIL_TEMPLATE = `
           </td>
         </tr>
         <tr>
-          <td class="footer" style="padding: 40px 30px; background-color: #f4f5f8; color: #1B365D; font-size: 12px; text-align: center;">
+          <td class="footer" style="padding: 40px 30px; background-color: #f4f5f8; color: #1B365D; font-size: 14px; text-align: center;">
             <table width="100%" style="border-spacing: 0; border-collapse: collapse;">
               <tbody>
                 <tr>
-                  <td class="social-links" style="padding: 0; margin-bottom: 20px; text-align: center;">
-                    <p class="font-lobster"
-                      style="font-size: 20px; margin: 0 0 10px 0; color: #1B365D; font-weight: normal; font-family: 'Lobster', cursive;">
-                      Социальные сети
-                    </p>
+                  <tdstyle="padding: 0; margin-bottom: 20px; text-align: center;">
                     <a href="https://vk.com/public211738230" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">VK</a>
                     <a href="https://t.me/RomanSKIPPER" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">Telegram</a>
                     <a href="https://wa.me/79217824446" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">WhatsApp</a>
-                  </td>
+                  </tdstyle=>
                 </tr>
                 <tr>
                   <td style="padding: 20px 0px; text-align: center;">

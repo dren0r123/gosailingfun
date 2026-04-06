@@ -39,30 +39,27 @@ export async function generatePdfCertificateStream(
   const clientNameFontSize = 14;
   const certificateIdentifierFontSize = 10;
 
+  // Отрисовка номера сертификата справа вверху
+  const certText = `Сертификат №: ${certificateCode}`;
+  const certTextWidth = embeddedCustomFont.widthOfTextAtSize(certText, certificateIdentifierFontSize);
+  targetPdfPage.drawText(certText, {
+    x: pageWidth - certTextWidth - 30,
+    y: pageHeight - 30,
+    size: certificateIdentifierFontSize,
+    font: embeddedCustomFont,
+    color: rgb(0, 0, 0),
+  });
+
   // Установка стартовой позиции Y ближе к верхнему краю страницы (под приветственным текстом)
-  let currentVerticalPosition = pageHeight - 102;
-
-  // Отрисовка номера сертификата
-  drawCenteredText(
-    targetPdfPage,
-    `Сертификат №: ${certificateCode}`,
-    embeddedCustomFont,
-    certificateIdentifierFontSize,
-    currentVerticalPosition,
-  );
-
-  // Смещение координаты Y вниз для перехода на вторую пустую строку
-  currentVerticalPosition -= 18;
+  let currentVerticalPosition = pageHeight - 104;
 
   const maximumNameTextWidth = pageWidth - 80;
-  const formattedNameLinesArray = splitTextIntoLines(
-    clientFullName,
-    embeddedCustomFont,
-    clientNameFontSize,
-    maximumNameTextWidth,
-  );
+  const formattedNameLinesArray = [
+    ...splitTextIntoLines(`Уважаемый, ${clientFullName}`, embeddedCustomFont, clientNameFontSize, maximumNameTextWidth),
+    `Ждем вас на морской прогулке`,
+  ];
 
-  const clientNameLineHeight = embeddedCustomFont.heightAtSize(clientNameFontSize) + 6;
+  const clientNameLineHeight = embeddedCustomFont.heightAtSize(clientNameFontSize) - 1;
 
   for (const singleTextLine of formattedNameLinesArray) {
     drawCenteredText(targetPdfPage, singleTextLine, embeddedCustomFont, clientNameFontSize, currentVerticalPosition);
