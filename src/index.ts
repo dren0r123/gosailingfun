@@ -44,6 +44,7 @@ expressApplication.use(
 );
 
 expressApplication.use(express.json());
+expressApplication.use(express.static('public'));
 
 const apiRouter = express.Router();
 apiRouter.use('/certificate', certificateRouter);
