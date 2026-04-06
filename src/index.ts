@@ -24,11 +24,11 @@ expressApplication.use(
   cors({
     origin: (requestOriginHeader, corsCallbackFunction) => {
       if (!requestOriginHeader) return corsCallbackFunction(null, true);
-      if (!allowedCorsOrigins.includes(requestOriginHeader)) {
-        const corsErrorMessage = ERROR_MESSAGES.CORS_NOT_ALLOWED;
-        return corsCallbackFunction(new Error(corsErrorMessage), false);
+      if (allowedCorsOrigins.includes(requestOriginHeader)) {
+        return corsCallbackFunction(null, true);
       }
-      return corsCallbackFunction(null, true);
+      const corsErrorMessage = ERROR_MESSAGES.CORS_NOT_ALLOWED;
+      return corsCallbackFunction(new Error(corsErrorMessage), false);
     },
     optionsSuccessStatus: 200,
   }),
