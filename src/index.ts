@@ -2,11 +2,16 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import cors from 'cors';
+import dns from 'dns';
 import express, { Express as ExpressApplication, Request, Response } from 'express';
 import fs from 'fs';
 import helmet from 'helmet';
 import https from 'https';
 import path from 'path';
+
+// Fix for Node 17+ ENETUNREACH error on IPv6.
+// Forces Node.js to prefer IPv4 when resolving DNS like smtp.gmail.com
+dns.setDefaultResultOrder('ipv4first');
 
 import { ERROR_MESSAGES } from './const';
 import { certificateRouter } from './routes';
