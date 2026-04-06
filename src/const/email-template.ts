@@ -38,7 +38,7 @@ export const CERTIFICATE_EMAIL_TEMPLATE = `
                 <tr>
                   <td style="padding: 0;">
                     <img alt="Gosailingfun.com"
-                      src="https://sun9-52.userapi.com/s/v1/ig2/_F2EUDznNDuSrtv6iSrvbnxNCP4-fU98LGXl_l0jefy1bZz1PtzC0QJvcjx155NLjiSEYP0Aio00qaD6Sha1V2OW.jpg?quality=95&as=32x24,48x37,72x55,108x82,160x122,240x183,360x274,480x366,540x412,640x488,720x549,800x610&from=bu&u=B4IPuT8xxhzE2eg_VE6W9frvyWcFGONK6pcPkBHXc9s&cs=800x0"
+                      src="https://gosailingfun.vercel.app/go-sailing-fun-logo.jpg"
                       style="width: 100%; height: auto; display: block; border: 0;" width="600">
                   </td>
                 </tr>
