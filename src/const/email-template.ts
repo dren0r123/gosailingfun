@@ -15,6 +15,24 @@ export const CERTIFICATE_EMAIL_TEMPLATE = (certificateNumber: string) => `
       background-color: #112543 !important;
     }
 
+    .nav-link {
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: #3a6db5 !important;
+      opacity: 0.85;
+    }
+
+    .social-link {
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .social-link:hover {
+      color: #3a6db5 !important;
+      opacity: 0.85;
+    }
+
     @media screen and (max-width: 600px) {
       .main {
         width: 100% !important;
@@ -61,7 +79,7 @@ export const CERTIFICATE_EMAIL_TEMPLATE = (certificateNumber: string) => `
                 <tr>
                   <td style="padding: 0;">
                     <div style="font-size: 28px; line-height: 26px; color: #1B365D; margin: 0px 0px 20px; text-align: center; font-weight: 600;">
-                      Сертификат: <span style="text-decoration: underline;">№ ${certificateNumber}</span>
+                      Сертификат: № ${certificateNumber}
                     </div>
                     <p
                       style="font-size: 16px; line-height: 26px; color: #44474E; margin: 0px 0px 32px; text-align: center; font-family: 'Inter', Arial, sans-serif;">
@@ -89,15 +107,23 @@ export const CERTIFICATE_EMAIL_TEMPLATE = (certificateNumber: string) => `
             <table width="100%" style="border-spacing: 0; border-collapse: collapse;">
               <tbody>
                 <tr>
-                  <tdstyle="padding: 0; margin-bottom: 20px; text-align: center;">
-                    <a href="https://vk.com/public211738230" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">VK</a>
-                    <a href="https://t.me/RomanSKIPPER" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">Telegram</a>
-                    <a href="https://wa.me/79217824446" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">WhatsApp</a>
-                  </tdstyle=>
+                  <td style="padding: 0 0 20px; text-align: center;">
+                    <a class="nav-link" href="https://gosailingfun.com/" style="color: #1B365D; text-decoration: none; margin: 0 10px; font-weight: 600; font-family: 'Inter', Arial, sans-serif;">Туры</a>
+                    <a class="nav-link" href="https://gosailingfun.com/" style="color: #1B365D; text-decoration: none; margin: 0 10px; font-weight: 600; font-family: 'Inter', Arial, sans-serif;">Регаты</a>
+                    <a class="nav-link" href="https://gosailingfun.com/" style="color: #1B365D; text-decoration: none; margin: 0 10px; font-weight: 600; font-family: 'Inter', Arial, sans-serif;">Обучение</a>
+                    <a class="nav-link" href="https://gosailingfun.com/" style="color: #1B365D; text-decoration: none; margin: 0 10px; font-weight: 600; font-family: 'Inter', Arial, sans-serif;">Корпоративный Яхтинг</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 0; text-align: center;">
+                    <a class="social-link" href="https://vk.com/public211738230" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">VK</a>
+                    <a class="social-link" href="https://t.me/RomanSKIPPER" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">Telegram</a>
+                    <a class="social-link" href="https://wa.me/79217824446" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">WhatsApp</a>
+                  </td>
                 </tr>
                 <tr>
                   <td style="padding: 20px 0px; text-align: center;">
-                    <p style="margin: 0px; font-weight: 600;">
+                    <p style="margin: 0px;">
                       <a href="https://go-sailing.ru/#rec707606391" target="_blank" style="color: #1B365D; text-decoration: underline; font-family: 'Inter', Arial, sans-serif;">
                         Связаться с нами
                       </a>
