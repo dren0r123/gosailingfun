@@ -30,13 +30,13 @@ export async function generatePdfCertificateStream(
     throw new AppError(500, ERROR_MESSAGES.FONT_NOT_FOUND);
   }
   const fontFileBytes = await fileSystem.promises.readFile(customFontFilePath);
-  const embeddedCustomFont = await pdfDocumentInstance.embedFont(fontFileBytes);
+  const embeddedCustomFont = await pdfDocumentInstance.embedFont(fontFileBytes, { subset: true });
 
   const documentPagesList = pdfDocumentInstance.getPages();
   const targetPdfPage = documentPagesList[0];
   const { width: pageWidth, height: pageHeight } = targetPdfPage.getSize();
 
-  const clientNameFontSize = 14;
+  const clientNameFontSize = 13;
   const certificateIdentifierFontSize = 10;
 
   // Отрисовка номера сертификата справа вверху
@@ -55,11 +55,16 @@ export async function generatePdfCertificateStream(
 
   const maximumNameTextWidth = pageWidth - 80;
   const formattedNameLinesArray = [
-    ...splitTextIntoLines(`Уважаемый, ${clientFullName}`, embeddedCustomFont, clientNameFontSize, maximumNameTextWidth),
+    ...splitTextIntoLines(
+      `Уважаемый, ${clientFullName.trim()}`,
+      embeddedCustomFont,
+      clientNameFontSize,
+      maximumNameTextWidth,
+    ),
     `Ждем вас на морской прогулке`,
   ];
 
-  const clientNameLineHeight = embeddedCustomFont.heightAtSize(clientNameFontSize) - 1;
+  const clientNameLineHeight = embeddedCustomFont.heightAtSize(clientNameFontSize);
 
   for (const singleTextLine of formattedNameLinesArray) {
     drawCenteredText(targetPdfPage, singleTextLine, embeddedCustomFont, clientNameFontSize, currentVerticalPosition);
