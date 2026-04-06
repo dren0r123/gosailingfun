@@ -5,3 +5,8 @@ export interface GenerateCertificateRequestPayload {
   email?: string;
   templateId?: number | string;
 }
+
+export interface ValidateCertificateRequestPayload {
+  code: string;
+  phone: string;
+}

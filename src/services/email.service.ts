@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import path from 'path';
 
 import { CERTIFICATE_EMAIL_TEMPLATE } from '../const';
 const transporter = nodemailer.createTransport({
@@ -24,6 +25,11 @@ export const sendCertificateEmail = async (to: string, pdfBuffer: Buffer): Promi
       {
         filename: 'certificate.pdf',
         content: pdfBuffer,
+        contentType: 'application/pdf',
+      },
+      {
+        filename: 'Рекомендации для печати открытки формата A6.pdf',
+        path: path.join(__dirname, '../assets/Рекомендации для печати открытки формата A6.pdf'),
         contentType: 'application/pdf',
       },
     ],
