@@ -78,8 +78,14 @@ if (env === 'development') {
     });
   }
 } else {
-  const server = expressApplication.listen(serverPortNumber, () => {
-    console.log(`[ ready prod ] Listening at http://${host}:${serverPortNumber}/api`);
-  });
-  server.on('error', console.error);
+  // Only listen if NOT running on Vercel. Vercel Serverless Functions don't use app.listen()
+  if (!process.env.VERCEL) {
+    const server = expressApplication.listen(serverPortNumber, () => {
+      console.log(`[ ready prod ] Listening at http://${host}:${serverPortNumber}/api`);
+    });
+    server.on('error', console.error);
+  }
 }
+
+// Export the app for Vercel serverless deployment
+export default expressApplication;

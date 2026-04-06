@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 
 import { CERTIFICATE_EMAIL_TEMPLATE } from '../const';
-
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
   port: parseInt(process.env.SMTP_PORT || '465', 10),
@@ -10,6 +9,9 @@ const transporter = nodemailer.createTransport({
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
+  connectionTimeout: 10000, // 10 seconds timeout
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
 });
 
 export const sendCertificateEmail = async (to: string, pdfBuffer: Buffer): Promise<void> => {
