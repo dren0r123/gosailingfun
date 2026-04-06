@@ -70,7 +70,7 @@ export const CERTIFICATE_EMAIL_TEMPLATE = `
                       <tbody>
                         <tr>
                           <td align="center" class="bg-navy" style="padding: 0; background-color: #1B365D; border-radius: 20px;">
-                            <a class="btn" href="https://gosailingfun.com/" target="_blank" style="color: #ffffff; text-decoration: none; display: inline-block; padding: 24px 36px; font-weight: 600; letter-spacing: 1px; font-size: 14px; border-radius: 20px; transition: ease-in background-color 0.15s; font-family: 'Inter', Arial, sans-serif;">ЗАБРОНИРОВАТЬ ПРОГУЛКУ</a>
+                            <a class="btn" href="https://go-sailing.ru/" target="_blank" style="color: #ffffff; text-decoration: none; display: inline-block; padding: 24px 36px; font-weight: 600; letter-spacing: 1px; font-size: 14px; border-radius: 20px; transition: ease-in background-color 0.15s; font-family: 'Inter', Arial, sans-serif;">ЗАБРОНИРОВАТЬ ПРОГУЛКУ</a>
                           </td>
                         </tr>
                       </tbody>
@@ -88,20 +88,18 @@ export const CERTIFICATE_EMAIL_TEMPLATE = `
                 <tr>
                   <td class="social-links" style="padding: 0; margin-bottom: 20px; text-align: center;">
                     <p class="font-lobster"
-                      style="font-size: 20px; margin: 0 0 15px 0; color: #1B365D; font-weight: normal; font-family: 'Lobster', cursive;">
+                      style="font-size: 20px; margin: 0 0 10px 0; color: #1B365D; font-weight: normal; font-family: 'Lobster', cursive;">
                       Социальные сети
                     </p>
-                    <br>
-                    <a href="https://www.instagram.com/gosailing.fun" style="color: #1B365D; text-decoration: underline; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">Instagram</a>
-                    <a href="https://vk.com/gosailing_fun" style="color: #1B365D; text-decoration: underline; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">VK</a>
-                    <a href="https://t.me/gosailing_fun" style="color: #1B365D; text-decoration: underline; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">Telegram</a>
-                    <a href="https://wa.me/37259207644" style="color: #1B365D; text-decoration: underline; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">WhatsApp</a>
+                    <a href="https://vk.com/public211738230" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">VK</a>
+                    <a href="https://t.me/RomanSKIPPER" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">Telegram</a>
+                    <a href="https://wa.me/79217824446" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">WhatsApp</a>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding: 20px 0px; text-align: center;">
                     <p style="margin: 0px; font-weight: 600;">
-                      <a href="https://gosailingfun.com/contacts" target="_blank" style="color: #1B365D; text-decoration: underline; font-family: 'Inter', Arial, sans-serif;">
+                      <a href="https://go-sailing.ru/#rec707606391" target="_blank" style="color: #1B365D; text-decoration: underline; font-family: 'Inter', Arial, sans-serif;">
                         Связаться с нами
                       </a>
                     </p>

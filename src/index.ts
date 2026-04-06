@@ -12,6 +12,10 @@ import { ERROR_MESSAGES } from './const';
 import { certificateRouter } from './routes';
 
 const expressApplication: ExpressApplication = express();
+
+// Trust the first proxy. Essential for rate limiting when deployed behind a reverse proxy (like Render)
+expressApplication.set('trust proxy', 1);
+
 const serverPortNumber = process.env.PORT ? Number(process.env.PORT) : 3000;
 const host = process.env.HOST ?? 'localhost';
 const env = (process.env.NODE_ENV || 'development').trim();
