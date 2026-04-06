@@ -24,12 +24,13 @@ expressApplication.use(
   cors({
     origin: (requestOriginHeader, corsCallbackFunction) => {
       if (!requestOriginHeader) return corsCallbackFunction(null, true);
-      if (allowedCorsOrigins.indexOf(requestOriginHeader) === -1) {
+      if (!allowedCorsOrigins.includes(requestOriginHeader)) {
         const corsErrorMessage = ERROR_MESSAGES.CORS_NOT_ALLOWED;
         return corsCallbackFunction(new Error(corsErrorMessage), false);
       }
       return corsCallbackFunction(null, true);
     },
+    optionsSuccessStatus: 200,
   }),
 );
 
