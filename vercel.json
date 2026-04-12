@@ -15,10 +15,6 @@
   ],
   "routes": [
     {
-      "src": "/go-sailing-fun-logo.jpg",
-      "dest": "/public/go-sailing-fun-logo.jpg"
-    },
-    {
       "src": "/(.*)",
       "dest": "src/index.ts"
     }

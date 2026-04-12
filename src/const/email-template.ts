@@ -56,7 +56,7 @@ export const CERTIFICATE_EMAIL_TEMPLATE = (certificateNumber: string) => `
                 <tr>
                   <td style="padding: 0;">
                     <img alt="Gosailingfun.com"
-                      src="https://gosailingfun.vercel.app/go-sailing-fun-logo.jpg"
+                      src="https://gosailingfun.vercel.app/public/go-sailing-fun-logo.jpg"
                       style="width: 100%; height: auto; display: block; border: 0;" width="600">
                   </td>
                 </tr>
