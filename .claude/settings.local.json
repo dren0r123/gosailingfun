@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ':*)",
+      "WebFetch(domain:unpkg.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}

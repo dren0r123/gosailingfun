@@ -41,7 +41,7 @@ export async function handleCertificateGeneration(
 ): Promise<void> {
   try {
     const requestPayload: GenerateCertificateRequestPayload = expressRequest.body;
-    const { clientName, code, templateId = 1, phone, email } = requestPayload || {};
+    const { clientName, code, templateId = 1, phone, email, wishes } = requestPayload || {};
 
     const missingFields: string[] = [];
     if (!clientName) missingFields.push('clientName');
@@ -58,7 +58,7 @@ export async function handleCertificateGeneration(
       throw new AppError(404, ERROR_MESSAGES.INVALID_CERTIFICATE);
     }
 
-    const pdfDocumentBuffer = await generatePdfCertificateStream(clientName, code, templateId);
+    const pdfDocumentBuffer = await generatePdfCertificateStream(clientName, code, templateId, wishes);
 
     if (email) {
       await sendCertificateEmail(email, pdfDocumentBuffer, code);

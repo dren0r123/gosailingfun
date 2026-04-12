@@ -4,6 +4,7 @@ export interface GenerateCertificateRequestPayload {
   phone: string;
   email?: string;
   templateId?: number | string;
+  wishes?: string;
 }
 
 export interface ValidateCertificateRequestPayload {

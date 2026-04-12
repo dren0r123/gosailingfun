@@ -10,6 +10,7 @@ export async function generatePdfCertificateStream(
   clientFullName: string,
   certificateCode: string,
   templateIdentifier: number | string,
+  wishes?: string,
 ): Promise<Buffer> {
   const assetsDirectoryPath = path.join(process.cwd(), 'src', 'assets');
   const fontsDirectoryPath = path.join(process.cwd(), 'src', 'fonts');
@@ -51,24 +52,38 @@ export async function generatePdfCertificateStream(
   });
 
   // Установка стартовой позиции Y ближе к верхнему краю страницы (под приветственным текстом)
-  let currentVerticalPosition = pageHeight - 104;
+  let currentVerticalPosition = pageHeight - 85;
 
-  const maximumNameTextWidth = pageWidth - 80;
-  const formattedNameLinesArray = [
-    ...splitTextIntoLines(
-      `Уважаемый, ${clientFullName.trim()}`,
-      embeddedCustomFont,
-      clientNameFontSize,
-      maximumNameTextWidth,
-    ),
-    `Ждем вас на морской прогулке`,
-  ];
+  const horizontalMargin = 25;
+  const maximumTextWidth = pageWidth - horizontalMargin * 2;
+  const templateLineSpacing = 17;
 
-  const clientNameLineHeight = embeddedCustomFont.heightAtSize(clientNameFontSize);
+  // Линия 1: имя клиента по центру
+  drawCenteredText(
+    targetPdfPage,
+    clientFullName.trim(),
+    embeddedCustomFont,
+    clientNameFontSize,
+    currentVerticalPosition,
+  );
+  currentVerticalPosition -= templateLineSpacing;
 
-  for (const singleTextLine of formattedNameLinesArray) {
-    drawCenteredText(targetPdfPage, singleTextLine, embeddedCustomFont, clientNameFontSize, currentVerticalPosition);
-    currentVerticalPosition -= clientNameLineHeight;
+  // Линии 2-4: пожелания, левое выравнивание
+  if (wishes) {
+    const wishesFontSize = 9;
+    const truncatedWishes = wishes.slice(0, 200);
+    const wishesLines = splitTextIntoLines(truncatedWishes, embeddedCustomFont, wishesFontSize, maximumTextWidth);
+
+    for (const line of wishesLines) {
+      targetPdfPage.drawText(line, {
+        x: horizontalMargin,
+        y: currentVerticalPosition,
+        size: wishesFontSize,
+        font: embeddedCustomFont,
+        color: rgb(0, 0, 0),
+      });
+      currentVerticalPosition -= templateLineSpacing;
+    }
   }
 
   // Загружаем лицевую сторону, копируем первую страницу и вставляем ее в начало (индекс 0)

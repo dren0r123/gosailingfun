@@ -116,9 +116,18 @@ export const CERTIFICATE_EMAIL_TEMPLATE = (certificateNumber: string) => `
                 </tr>
                 <tr>
                   <td style="padding: 0; text-align: center;">
-                    <a class="social-link" href="https://vk.com/public211738230" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">VK</a>
-                    <a class="social-link" href="https://t.me/RomanSKIPPER" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">Telegram</a>
-                    <a class="social-link" href="https://wa.me/79217824446" style="color: #1B365D; text-decoration: none; margin: 0 8px; font-family: 'Inter', Arial, sans-serif;">WhatsApp</a>
+                    <a href="https://vk.com/public211738230" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                      <img src="https://gosailingfun.vercel.app/public/icon-vk.svg" alt="VK" width="24" height="24" style="display: block;" />
+                    </a>
+                    <a href="https://t.me/RomanSKIPPER" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                      <img src="https://gosailingfun.vercel.app/public/icon-telegram.svg" alt="Telegram" width="24" height="24" style="display: block;" />
+                    </a>
+                    <a href="https://wa.me/79217824446" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                      <img src="https://gosailingfun.vercel.app/public/icon-whatsapp.svg" alt="WhatsApp" width="24" height="24" style="display: block;" />
+                    </a>
+                    <a href="https://www.instagram.com/romanvikhorev?igsh=MXB4MXN4YWxxbGYzOA%3D%3D&utm_source=qr" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                      <img src="https://gosailingfun.vercel.app/public/icon-instagram.svg" alt="Instagram" width="24" height="24" style="display: block;" />
+                    </a>
                   </td>
                 </tr>
                 <tr>
