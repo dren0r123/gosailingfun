@@ -15,12 +15,17 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 10000,
 });
 
-export const sendCertificateEmail = async (to: string, pdfBuffer: Buffer, certificateNumber: string): Promise<void> => {
+export const sendCertificateEmail = async (
+  to: string,
+  pdfBuffer: Buffer,
+  certificateNumber: string,
+  templateIdentifier: number | string,
+): Promise<void> => {
   const mailOptions = {
     from: `"GoSailingFun" <${process.env.SMTP_USER}>`,
     to,
     subject: 'Ваш подарочный сертификат на прогулку на яхте',
-    html: CERTIFICATE_EMAIL_TEMPLATE(certificateNumber),
+    html: CERTIFICATE_EMAIL_TEMPLATE(certificateNumber, templateIdentifier),
     attachments: [
       {
         filename: 'certificate.pdf',
